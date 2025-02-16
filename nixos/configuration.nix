@@ -170,6 +170,10 @@
 	plugins = [ "git" ];
 	theme = "robbyrussell";
       };
+
+      shellAliases = {
+        update = "sudo nixos-rebuild switch && ~/dotfiles/backup.sh";
+      };
     };
   };   
 
