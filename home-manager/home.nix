@@ -61,14 +61,19 @@ in
     
     nodejs-18_x
     nodePackages.pnpm
-
-
+    
+    # Personal
+    obsidian
+   
     # Entertainment
     # spotify # Spicetify will take care of this, uncomment   
     cava
 
     # Other tools
     qdirstat
+
+    keepassxc
+
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the

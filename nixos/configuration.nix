@@ -67,6 +67,7 @@
 
   # Set your time zone.
   time.timeZone = "Europe/Warsaw";
+  time.hardwareClockInLocalTime = true;
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -113,6 +114,11 @@
   services.syncthing = {
     enable = true;
     openDefaultPorts = true;
+    systemService = true;
+
+    user = "piotr";
+    group = "wheel";
+    dataDir = "/home/piotr/syncthing";
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
