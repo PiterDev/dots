@@ -84,9 +84,9 @@
     openDefaultPorts = true;
     systemService = true;
 
-    user = "piotr";
+    user = "piter";
     group = "wheel";
-    dataDir = "/home/piotr/syncthing";
+    dataDir = "/home/piter/syncthing";
   };
 
 
@@ -99,6 +99,7 @@
     description = "piter";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [];
+    shell = pkgs.zsh; 
   };
 
 
