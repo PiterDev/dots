@@ -51,6 +51,7 @@ in
     brave
     rofi
     vlc
+    fastfetch
 
     redshift
 
