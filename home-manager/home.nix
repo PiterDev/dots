@@ -21,7 +21,7 @@ in
        hidePodcasts
        shuffle # shuffle+ (special characters are sanitized out of extension names)
      ];
-     theme = spicePkgs.themes.starryNight;
+     theme = spicePkgs.themes.ziro;
    };
   
   # Home Manager needs a bit of information about you and the paths it should
@@ -50,6 +50,7 @@ in
     kitty
     brave
     rofi
+    vlc
 
     redshift
 
@@ -64,11 +65,19 @@ in
     bun
     nodejs-18_x
     nodePackages.pnpm
-
-
+    
+    # Personal
+    obsidian
+   
     # Entertainment
     # spotify # Spicetify will take care of this, uncomment   
     cava
+
+    # Other tools
+    qdirstat
+
+    keepassxc
+
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
