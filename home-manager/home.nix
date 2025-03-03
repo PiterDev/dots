@@ -3,7 +3,7 @@
 let
   spicetify-nix = import (builtins.fetchTarball {
     url = "https://github.com/Gerg-L/spicetify-nix/archive/refs/heads/master.tar.gz";
-    sha256 = "0qyd7w60w4ylc4wd8hnd02qis5p00mlayb66vw399482rm6didk2"; 
+    sha256 = "0x8irlr3qfzin6kljniy76svz67rlir74dzw6nn3s54f9j8bgvrm"; 
   }) { inherit pkgs; };
 
   spicePkgs = spicetify-nix.packages;
@@ -26,8 +26,8 @@ in
   
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  home.username = "piotr";
-  home.homeDirectory = "/home/piotr";
+  home.username = "piter";
+  home.homeDirectory = "/home/piter";
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -58,6 +58,10 @@ in
     godot_4
     blender
     
+    # Compilers and stuff like that
+    python3
+    uv
+    bun
     nodejs-18_x
     nodePackages.pnpm
 

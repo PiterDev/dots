@@ -4,21 +4,15 @@
 
 { config, pkgs, ... }:
 
-
-
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
 
-
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
-  # NTFS
-  boot.supportedFilesystems = [ "ntfs" ];
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -49,35 +43,29 @@
   };
 
   # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "pl";
-    variant = "";
-  };
 
-  services.libinput = {
-    enable = true;
-    mouse = {
-      accelProfile = "flat";
-      accelSpeed = "-0.5";
+  services = {
+    xserver = {
+      enable = true;
+
+      xkb = {
+        layout = "pl";
+	variant = "";
+      };
+
+      windowManager.awesome = {
+        enable = true;
+	luaModules = with pkgs.luaPackages; [
+          luarocks
+	];
+      };
+    };
+
+    displayManager = {
+      ly.enable = true;
+      defaultSession = "none+awesome";
     };
   };
-
-
-  # Configure PipeWire
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-
-  };
-
-  services.syncthing = {
-    enable = true;
-    openDefaultPorts = true;
-  };
-
 
   # Configure console keymap
   console.keyMap = "pl2";
@@ -90,68 +78,35 @@
     packages = with pkgs; [];
   };
 
-
-  # Experimental features
-  # TODO: Become a nix-command chad
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+  
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-   neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-   git
-   pavucontrol
-   xfce.thunar
-   zsh
-   oh-my-zsh
-   gnome-screenshot
-   scrot
-   xclip
-   stow
+    neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    stow
+    home-manager
+    acpi
+    fastfetch
+    xfce.thunar
+    ranger
+    godot_4
+    picom
+    rofi
+    vscode-fhs
+    cmatrix
   #  wget
   ];
-
-  # Xorg
-  services.xserver = {
-    enable = true;
-    displayManager.gdm.enable = true;
-    
-    windowManager.awesome = {
-      enable = true;
-      luaModules = with pkgs.luaPackages; [
-        luarocks
-      ];
-    };
-  };
   
-  ## Programs idk
-  programs = {
-    direnv = {
-      enable = true;
-      enableZshIntegration = true;
-      
-    };
 
-    zsh = {
-      enable = true;
-      ohMyZsh = {
-        enable = true;
-	plugins = [ "git" ];
-	theme = "robbyrussell";
-      };
+  fonts.packages = with pkgs; [
+    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+    jetbrains-mono
+  ];
 
-      shellAliases = {
-        update = "sudo nixos-rebuild switch && ~/dotfiles/backup.sh";
-      };
-    };
-    
-    steam = {
-      enable = true;
-    };
-  };   
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
