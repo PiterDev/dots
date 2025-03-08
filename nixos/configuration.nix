@@ -5,25 +5,20 @@
 { config, pkgs, ... }:
 
 
-
+let
+  username = "piter";
+in 
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./modules/hardware.nix
     ];
 
-
-  # Bluetooth
-  hardware.bluetooth.enable = true; # enables support for Bluetooth
-  hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
-  services.blueman.enable = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
-  # NTFS
-  boot.supportedFilesystems = [ "ntfs" ];
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -84,9 +79,9 @@
     openDefaultPorts = true;
     systemService = true;
 
-    user = "piter";
+    user = username;
     group = "wheel";
-    dataDir = "/home/piter/syncthing";
+    dataDir = "/home/${username}/syncthing";
   };
 
 
@@ -94,9 +89,9 @@
   console.keyMap = "pl2";
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.piter = {
+  users.users.${username}= {
     isNormalUser = true;
-    description = "piter";
+    description = username;
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [];
     shell = pkgs.zsh; 

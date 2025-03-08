@@ -3,7 +3,7 @@
 let
   spicetify-nix = import (builtins.fetchTarball {
     url = "https://github.com/Gerg-L/spicetify-nix/archive/refs/heads/master.tar.gz";
-    sha256 = "0x8irlr3qfzin6kljniy76svz67rlir74dzw6nn3s54f9j8bgvrm"; 
+    sha256 = "00pvcn8crhk721sn97yh03jbqc1ymz9hp3x5q95vgb6rbclv4n03"; 
   }) { inherit pkgs; };
 
   spicePkgs = spicetify-nix.packages;
