@@ -13,6 +13,7 @@ in
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./modules/hardware.nix
+      ./modules/packages.nix
     ];
 
 
@@ -102,25 +103,7 @@ in
   # TODO: Become a nix-command chad
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-   neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-   git
-   pavucontrol
-   nautilus
-   zsh
-   oh-my-zsh
-   gnome-screenshot
-   scrot
-   xclip
-   stow
-  #  wget
-  ];
-
+  
   # Xorg
   services.xserver = {
     enable = true;
@@ -133,6 +116,10 @@ in
       ];
     };
   };
+
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
+
   
   ## Programs idk
   programs = {

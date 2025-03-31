@@ -52,8 +52,9 @@ in
     rofi
     vlc
     fastfetch
-
+    acpi
     redshift
+    emote
 
     # Programming
     vscode-fhs
