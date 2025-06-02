@@ -21,6 +21,24 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # Nvidia Graphics (pls work)
+  hardware.graphics = {
+    enable = true;
+  };
+  # This driver supports both xorg and wayland
+  services.xserver.videoDrivers = [ "nvidia" ]; 
+  
+  hardware.nvidia = {
+    modesetting.enable = true;
+    
+    powerManagement.enable = true;
+    powerManagement.finegrained = false;
+    
+    open = false;
+    nvidiaSettings = true;
+    package =  config.boot.kernelPackages.nvidiaPackages.stable;
+  };
+
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -64,6 +82,8 @@ in
     };
   };
 
+  # Configure console keymap
+  console.keyMap = "pl2";
 
   # Configure PipeWire
   security.rtkit.enable = true;
@@ -85,10 +105,6 @@ in
     dataDir = "/home/${username}/syncthing";
   };
 
-
-  # Configure console keymap
-  console.keyMap = "pl2";
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.${username}= {
     isNormalUser = true;
@@ -98,27 +114,23 @@ in
     shell = pkgs.zsh; 
   };
 
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
 
   # Experimental features
   # TODO: Become a nix-command chad
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  #nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   
-  # Xorg
-  services.xserver = {
-    enable = true;
-    displayManager.gdm.enable = true;
-    
-    windowManager.awesome = {
-      enable = true;
-      luaModules = with pkgs.luaPackages; [
-        luarocks
-      ];
-    };
-  };
+  # GDM
+  # TODO: Check if deprecated
+   services.xserver = {
+     enable = true;
+     displayManager.gdm = {
+       enable = true;
+     };
+   };
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
 
   
   ## Programs idk
@@ -142,10 +154,9 @@ in
       };
     };
     
-    steam = {
-      enable = true;
-    };
   };   
+
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

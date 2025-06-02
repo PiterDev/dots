@@ -1,32 +1,73 @@
 
 { config, pkgs, ... }:
 
-{
+let
+  unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
+in {
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
   
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-   neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-   git
-   pavucontrol
-   nautilus
-   zsh
-   oh-my-zsh
-   gnome-screenshot
-   scrot
-   xclip
-   stow
+    # === Hyprland ===
+    wofi
+    hyprpaper
+    waybar
+    xwayland
 
-   xorg.xrandr
-   arandr
-  #  wget
+    # === Glorious Web Browser ===
+    firefox
+    
+    # === Notes ===
+    obsidian
+
+    # === Dev Tools ===
+    unstable.neovim 
+    git
+    docker
+    
+    gcc14
+
+    # === Utilities ===
+    pavucontrol
+    nautilus
+    loupe
+    unzip
+    file-roller
+    swaynotificationcenter
+    qdirstat
+
+    grim
+    slurp
+    wl-clipboard
+    keepassxc
+    
+    # === Terminal ===
+    kitty
+    zsh
+    oh-my-zsh
+    
+    stow
+    tldr
+    
+    # === Fun ===
+    spotify
+    fastfetch
+    
+    # === Nvidia ===
+    egl-wayland
   ];
 
 
   # Programs idk
   programs = {
+    hyprland = {
+      enable = true;
+      withUWSM = true;
+      xwayland.enable = true;
+    };
+
     direnv = {
       enable = true;
       enableZshIntegration = true;
@@ -50,6 +91,11 @@
       enable = true;
     };
   };   
+
+  fonts.packages = with pkgs; [
+    (nerdfonts.override { fonts = ["JetBrainsMono"]; })
+    jetbrains-mono
+  ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
