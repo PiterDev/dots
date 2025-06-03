@@ -11,17 +11,16 @@ in {
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     # === Hyprland ===
-    rofi
-    feh
-    # polybar
-
+    wofi
+    hyprpaper
+    waybar
+    xwayland
 
     # === Glorious Web Browser ===
     firefox
     
-    # === Apps ===
+    # === Notes ===
     obsidian
-    discord
 
     # === Dev Tools ===
     unstable.neovim 
@@ -32,18 +31,16 @@ in {
 
     # === Utilities ===
     pavucontrol
-    bluetuith
-    xfce.thunar
+    nautilus
     loupe
     unzip
     file-roller
-    dunst
+    swaynotificationcenter
     qdirstat
 
-    scrot
-    xclip
-    arandr
-
+    grim
+    slurp
+    wl-clipboard
     keepassxc
     
     # === Terminal ===
@@ -57,11 +54,20 @@ in {
     # === Fun ===
     spotify
     fastfetch
+    
+    # === Nvidia ===
+    egl-wayland
   ];
 
 
   # Programs idk
   programs = {
+    hyprland = {
+      enable = true;
+      withUWSM = true;
+      xwayland.enable = true;
+    };
+
     direnv = {
       enable = true;
       enableZshIntegration = true;

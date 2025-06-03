@@ -124,17 +124,13 @@ in
   
   # GDM
   # TODO: Check if deprecated
-    services.xserver = {
-	    enable = true;
-	    displayManager.gdm.enable = true;
-	    
-	    windowManager.awesome = {
-	      enable = true;
-	      luaModules = with pkgs.luaPackages; [
-		luarocks
-	      ];
-	    };
-	  };
+   services.xserver = {
+     enable = true;
+     displayManager.gdm = {
+       enable = true;
+     };
+   };
+
 
   
   ## Programs idk
